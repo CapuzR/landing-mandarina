@@ -1,0 +1,6 @@
+name = "mandarina-calculadora"
+main = "src/index.js"
+compatibility_date = "2025-06-01"
+
+# El secret RESEND_API_KEY NO va aquí. Se setea con:
+#   wrangler secret put RESEND_API_KEY

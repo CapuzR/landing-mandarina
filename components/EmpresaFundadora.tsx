@@ -2,12 +2,19 @@
 
 import { useState, type ChangeEvent, type FormEvent } from "react";
 
+// Access key de Web3Forms. Es PÚBLICA por diseño (solo enruta el correo a tu
+// bandeja), por eso vive aquí en el cliente. Para evitar abusos, restringe esta
+// key a usamandarina.com en el panel de Web3Forms.
+const WEB3FORMS_ACCESS_KEY = "3eb31104-d457-4294-bf65-65b597fd32b8";
+
 type Formulario = {
   nombre: string;
   empresa: string;
   contacto: string;
   reto: string;
 };
+
+type Estado = "idle" | "enviando" | "ok" | "error";
 
 const inicial: Formulario = { nombre: "", empresa: "", contacto: "", reto: "" };
 
@@ -26,7 +33,7 @@ const pedimos = [
 
 export default function EmpresaFundadora() {
   const [form, setForm] = useState<Formulario>(inicial);
-  const [enviado, setEnviado] = useState(false);
+  const [estado, setEstado] = useState<Estado>("idle");
 
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -35,25 +42,33 @@ export default function EmpresaFundadora() {
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (estado === "enviando") return;
+    setEstado("enviando");
 
-    // -------------------------------------------------------------------
-    // AQUÍ SE CONECTA EL BACKEND.
-    // Por ahora solo registramos en consola y mostramos la confirmación.
-    // Para conectarlo, reemplaza este console.log por un envío, por ejemplo:
-    //
-    //   await fetch("/api/empresa-fundadora", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(form),
-    //   });
-    //
-    // o el endpoint de tu servicio de formularios (Formspree, Resend, etc.).
-    // -------------------------------------------------------------------
-    console.log("Nueva empresa fundadora:", form);
+    const formData = new FormData(e.currentTarget);
+    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+    formData.append("from_name", "Mandarina");
+    formData.append(
+      "subject",
+      `Nueva empresa fundadora: ${form.empresa || form.nombre || "sin nombre"}`
+    );
 
-    setEnviado(true);
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setEstado("ok");
+      } else {
+        setEstado("error");
+      }
+    } catch {
+      setEstado("error");
+    }
   }
 
   return (
@@ -109,7 +124,7 @@ export default function EmpresaFundadora() {
 
           {/* Formulario */}
           <div className="rounded-2xl border border-borde bg-crema p-6 md:p-8">
-            {enviado ? (
+            {estado === "ok" ? (
               <div
                 role="status"
                 aria-live="polite"
@@ -145,6 +160,16 @@ export default function EmpresaFundadora() {
                 <p className="mt-1.5 text-sm text-tenue">
                   Te contactamos por WhatsApp o correo. No compartimos tus datos.
                 </p>
+
+                {/* Honeypot anti-spam: oculto para humanos, lo llenan los bots */}
+                <input
+                  type="checkbox"
+                  name="botcheck"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{ display: "none" }}
+                />
 
                 <div className="mt-6 space-y-4">
                   <Campo
@@ -196,10 +221,22 @@ export default function EmpresaFundadora() {
 
                 <button
                   type="submit"
-                  className="mt-6 w-full rounded-full bg-terracota px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-terracota-oscuro"
+                  disabled={estado === "enviando"}
+                  className="mt-6 w-full rounded-full bg-terracota px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-terracota-oscuro disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                  Quiero ser empresa fundadora
+                  {estado === "enviando"
+                    ? "Enviando..."
+                    : "Quiero ser empresa fundadora"}
                 </button>
+
+                {estado === "error" && (
+                  <p
+                    role="alert"
+                    className="mt-3 text-center text-sm font-medium text-terracota-oscuro"
+                  >
+                    No se pudo enviar. Intenta de nuevo o escríbenos por WhatsApp.
+                  </p>
+                )}
 
                 <p className="mt-3 text-center text-sm text-tenue">
                   ¿Prefieres directo?{" "}

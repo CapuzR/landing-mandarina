@@ -1,0 +1,29 @@
+# Mandarina
+
+> Mandarina es un agente de IA que potencia al equipo de cobranzas de empresas que venden a crédito en Venezuela. Persigue los vencidos, lee las capturas de pago y concilia las cuentas, sin crecer la nómina.
+
+Mandarina no reemplaza al equipo de cobranza: lo potencia. El agente hace el trabajo repetitivo y propone; el equipo aprueba y mantiene la última palabra. Es un producto en construcción, en fase de empresas fundadoras.
+
+## Qué hace el agente
+- Recibe: arma el libro de deudas con las facturas y sus vencimientos.
+- Cobra: persigue los vencidos por WhatsApp, subiendo el tono según la mora, todos los días.
+- Lee: lee las capturas de pago (pago móvil, Zelle, transferencia, dólares) y extrae monto, banco, referencia y fecha.
+- Concilia: cruza cada pago contra su factura; maneja pagos parciales, varios bancos, tasa Bs/USD y retenciones.
+- Actualiza: mantiene el libro al día y escala a una persona solo las excepciones que necesitan decisión.
+- Historial: guarda el historial de pago de cada deudor.
+
+## Para quién es
+- Negocios B2B en Venezuela que venden a crédito a otros negocios y ya tienen quién cobre.
+- Rubros: consumo masivo (alimentos, bebidas, limpieza, cuidado personal); repuestos y ferretería (autopartes, industrial, materiales de construcción); equipos y tecnología (electrónica, electrodomésticos, insumos médicos).
+
+## Control
+El operador decide cuánto resuelve el agente solo y cuánto pasa por el equipo. El agente propone, el equipo aprueba. Todo queda registrado y auditable.
+
+## Precio
+Tarifa estable y predecible: una parte fija y otra que crece con la operación, sin saltos por inflación ni dólar. En definición con las empresas fundadoras.
+
+## Contacto
+- Sitio web: https://usamandarina.com
+- WhatsApp: +58 414 320 1028
+- Correo: hola@usamandarina.com
+- Agendar una conversación: https://calendar.app.google/UEFQFLVuHaeTod357

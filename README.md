@@ -23,20 +23,27 @@ Abre http://localhost:3000
 Otros comandos:
 
 ```bash
-npm run build   # compila para producción
-npm run start   # sirve la versión compilada
+npm run build     # genera el sitio estático en out/
+npm run preview   # previsualiza out/ en local
 ```
 
-## Desplegar en Vercel
+## Desplegar (sitio estático)
 
-Sube el repositorio a GitHub e impórtalo en Vercel, o usa la CLI:
+El proyecto usa export estático de Next.js (`output: "export"` en `next.config.mjs`),
+así que `npm run build` genera una carpeta `out/` con HTML/CSS/JS lista para cualquier
+CDN. No hay servidor ni OpenNext.
 
-```bash
-npm i -g vercel
-vercel
-```
+**Cloudflare Pages (lo más simple):**
+- Framework preset: Next.js (Static HTML Export), o "None".
+- Build command: `npm run build`
+- Build output directory: `out`
 
-No hace falta configurar nada extra: Vercel detecta Next.js automáticamente.
+**Cloudflare Workers (static assets):** usa el `wrangler.jsonc` incluido.
+- Build command: `npm run build`
+- Deploy command: `npx wrangler deploy`
+
+El `name` del Worker en `wrangler.jsonc` debe coincidir con el de tu proyecto en
+Cloudflare.
 
 ## Dónde tocar cada cosa
 

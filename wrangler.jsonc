@@ -1,0 +1,10 @@
+{
+  // Despliegue como sitio estático en Cloudflare Workers (static assets).
+  // No usa OpenNext ni un Worker de servidor: solo sirve la carpeta out/.
+  // El "name" es el nombre del Worker en tu cuenta de Cloudflare.
+  "name": "landing-mandarina",
+  "compatibility_date": "2025-06-01",
+  "assets": {
+    "directory": "./out"
+  }
+}

@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 
+export const dynamic = "force-static";
+
 const SITE = "https://usamandarina.com";
 
 // Permitimos explícitamente a los crawlers de IA: queremos que Mandarina sea

@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og";
 
+export const dynamic = "force-static";
+
 export const alt =
   "Mandarina: cobra más rápido y concilia cada pago, sin crecer tu equipo.";
 export const size = { width: 1200, height: 630 };

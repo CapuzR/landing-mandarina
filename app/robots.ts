@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export const dynamic = "force-static";
 
-const SITE = "https://usamandarina.com";
+const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://usamandarina.com";
 
 // Permitimos explícitamente a los crawlers de IA: queremos que Mandarina sea
 // citada por ChatGPT, Claude, Gemini, Perplexity y compañía, no bloqueada.

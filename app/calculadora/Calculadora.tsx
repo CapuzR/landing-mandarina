@@ -11,12 +11,15 @@ import { calcular, fmtUSD, fmtFTE, type Inputs } from "./calc";
 // Mientras tenga el placeholder, los resultados se muestran igual;
 // solo no se intenta enviar el correo.
 // ============================================================
-const WORKER_URL = "https://mandarina-calculadora.TU-SUBDOMINIO.workers.dev";
+const WORKER_URL =
+  process.env.NEXT_PUBLIC_FORMS_WORKER_URL ??
+  "https://mandarina-calculadora.TU-SUBDOMINIO.workers.dev";
 const WORKER_CONFIGURADO =
   WORKER_URL.startsWith("https://") && !WORKER_URL.includes("TU-SUBDOMINIO");
 
-const WHATSAPP = "https://wa.me/584143201028";
-const AGENDA = "https://calendar.app.google/UEFQFLVuHaeTod357";
+const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_URL ?? "https://wa.me/584143201028";
+const AGENDA =
+  process.env.NEXT_PUBLIC_AGENDA_URL ?? "https://calendar.app.google/UEFQFLVuHaeTod357";
 
 const emailValido = (e: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.trim());
 
@@ -176,7 +179,7 @@ export default function Calculadora() {
                   </p>
                 </>
               ) : (
-                <p className="mt-3 text-xl font-bold leading-snug text-tenue/50">
+                <p className="mt-3 text-xl font-bold leading-snug text-tenue/80">
                   Completa tus datos y calcula para ver tu número.
                 </p>
               )}
@@ -375,7 +378,7 @@ export default function Calculadora() {
                     href={AGENDA}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center rounded-full border border-borde px-6 py-3.5 text-base font-semibold text-carbon transition-colors hover:border-carbon/30 hover:bg-arena"
+                    className="inline-flex items-center justify-center rounded-full border border-borde-fuerte px-6 py-3.5 text-base font-semibold text-carbon transition-colors hover:border-carbon/30 hover:bg-arena"
                   >
                     Agenda 45 min
                   </a>
@@ -407,14 +410,14 @@ export default function Calculadora() {
             <button
               type="button"
               onClick={handleReset}
-              className="rounded-full border border-borde px-4 py-2 text-sm font-medium text-carbon transition-colors hover:bg-arena"
+              className="rounded-full border border-borde-fuerte px-4 py-2 text-sm font-medium text-carbon transition-colors hover:bg-arena"
             >
               ↻ Reiniciar
             </button>
             <button
               type="button"
               onClick={handleCopiar}
-              className="rounded-full border border-borde px-4 py-2 text-sm font-medium text-carbon transition-colors hover:bg-arena"
+              className="rounded-full border border-borde-fuerte px-4 py-2 text-sm font-medium text-carbon transition-colors hover:bg-arena"
             >
               {copiado ? "URL copiada" : "Copiar URL del demo"}
             </button>
@@ -455,7 +458,7 @@ function Field({
       <label className="block text-sm font-semibold text-carbon">{label}</label>
       <div
         className={`mt-1.5 flex items-center rounded-lg border bg-white transition-colors focus-within:ring-2 focus-within:ring-terracota/30 ${
-          error ? "border-terracota" : "border-borde focus-within:border-terracota"
+          error ? "border-terracota" : "border-borde-fuerte focus-within:border-terracota"
         }`}
       >
         {prefix && <span className="pl-3.5 text-tenue">{prefix}</span>}
@@ -467,7 +470,7 @@ function Field({
           min={min}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full bg-transparent px-3.5 py-2.5 text-carbon outline-none placeholder:text-tenue/40"
+          className="w-full bg-transparent px-3.5 py-2.5 text-carbon outline-none placeholder:text-tenue/80"
         />
         {suffix && <span className="pr-3.5 text-sm text-tenue">{suffix}</span>}
       </div>

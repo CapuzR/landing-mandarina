@@ -2,10 +2,9 @@
 
 import { useState, type ChangeEvent, type FormEvent } from "react";
 
-// Access key de Web3Forms. Es PÚBLICA por diseño (solo enruta el correo a tu
-// bandeja), por eso vive aquí en el cliente. Para evitar abusos, restringe esta
-// key a usamandarina.com en el panel de Web3Forms.
-const WEB3FORMS_ACCESS_KEY = "3eb31104-d457-4294-bf65-65b597fd32b8";
+// Worker propio (Resend) que envía el correo del formulario. Es el mismo Worker
+// que usa la calculadora; ver landing/worker/. Sin esta URL no se puede enviar.
+const WORKER_URL = process.env.NEXT_PUBLIC_FORMS_WORKER_URL ?? "";
 
 type Formulario = {
   nombre: string;
@@ -45,27 +44,29 @@ export default function EmpresaFundadora() {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (estado === "enviando") return;
-    setEstado("enviando");
 
+    // Honeypot anti-spam: si el campo oculto viene lleno es un bot. Fingimos
+    // éxito y no enviamos nada.
     const formData = new FormData(e.currentTarget);
-    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
-    formData.append("from_name", "Mandarina");
-    formData.append(
-      "subject",
-      `Nueva empresa fundadora: ${form.empresa || form.nombre || "sin nombre"}`
-    );
+    if (formData.get("botcheck")) {
+      setEstado("ok");
+      return;
+    }
 
+    if (!WORKER_URL) {
+      setEstado("error");
+      return;
+    }
+
+    setEstado("enviando");
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch(WORKER_URL, {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tipo: "empresa_fundadora", ...form }),
       });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        setEstado("ok");
-      } else {
-        setEstado("error");
-      }
+      const data = await res.json().catch(() => ({}));
+      setEstado(res.ok && data.ok ? "ok" : "error");
     } catch {
       setEstado("error");
     }
@@ -213,7 +214,7 @@ export default function EmpresaFundadora() {
                       value={form.reto}
                       onChange={handleChange}
                       rows={3}
-                      className="mt-1.5 w-full rounded-lg border border-borde bg-white px-4 py-3 text-carbon outline-none transition-colors placeholder:text-tenue/50 focus:border-terracota focus:ring-2 focus:ring-terracota/30"
+                      className="mt-1.5 w-full rounded-lg border border-borde-fuerte bg-white px-4 py-3 text-carbon outline-none transition-colors placeholder:text-tenue/80 focus:border-terracota focus:ring-2 focus:ring-terracota/30"
                       placeholder="En una o dos frases."
                     />
                   </div>
@@ -310,7 +311,7 @@ function Campo({
         autoComplete={autoComplete}
         required={required}
         aria-required={required}
-        className="mt-1.5 w-full rounded-lg border border-borde bg-white px-4 py-3 text-carbon outline-none transition-colors placeholder:text-tenue/50 focus:border-terracota focus:ring-2 focus:ring-terracota/30"
+        className="mt-1.5 w-full rounded-lg border border-borde-fuerte bg-white px-4 py-3 text-carbon outline-none transition-colors placeholder:text-tenue/80 focus:border-terracota focus:ring-2 focus:ring-terracota/30"
       />
     </div>
   );

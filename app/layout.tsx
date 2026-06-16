@@ -8,8 +8,10 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://usamandarina.com";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://usamandarina.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default:
       "Mandarina · Cobra más rápido y concilia cada pago, sin crecer tu equipo",
@@ -34,11 +36,11 @@ export const metadata: Metadata = {
   creator: "Mandarina",
   publisher: "Mandarina",
   category: "business",
-  alternates: { canonical: "https://usamandarina.com" },
+  alternates: { canonical: SITE_URL },
   openGraph: {
     type: "website",
     locale: "es_VE",
-    url: "https://usamandarina.com",
+    url: SITE_URL,
     siteName: "Mandarina",
     title:
       "Mandarina · Cobra más rápido y concilia cada pago, sin crecer tu equipo",

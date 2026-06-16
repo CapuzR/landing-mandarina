@@ -1,18 +1,14 @@
 @import "tailwindcss";
 
-/* ============================================================
-   TOKENS DE MARCA
-   Cambia los colores aquí, en un solo lugar, y se actualiza
-   todo el sitio. El naranja es ACENTO, nunca fondo saturado.
-   ============================================================ */
 @theme {
-  --color-crema: #faf6ef; /* fondo principal: hueso cálido, no blanco frío */
-  --color-arena: #f4ece0; /* fondo de tarjetas y secciones alternas */
-  --color-borde: #e7dbc9; /* líneas y bordes suaves */
-  --color-carbon: #1c1917; /* texto principal */
-  --color-tenue: #574f48; /* texto secundario */
-  --color-terracota: #c2410c; /* acento, botones, logo */
-  --color-terracota-oscuro: #9a3412; /* hover y énfasis */
+  --color-crema: #faf6ef;
+  --color-arena: #f4ece0;
+  --color-borde: #e7dbc9;
+  --color-borde-fuerte: #a78a57;
+  --color-carbon: #1c1917;
+  --color-tenue: #574f48;
+  --color-terracota: #c2410c;
+  --color-terracota-oscuro: #9a3412;
 
   --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", sans-serif;
@@ -35,12 +31,11 @@ body {
   color: #fff;
 }
 
-/* ============================================================
-   ANIMACIÓN DE ENTRADA AL HACER SCROLL
-   Los elementos son visibles por defecto (sin JS quedan a la
-   vista). Solo se ocultan para animar cuando hay JS activo, y
-   se respeta a quien prefiere menos movimiento.
-   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--color-terracota);
+  outline-offset: 2px;
+}
+
 .js [data-reveal] {
   opacity: 0;
   transform: translateY(16px);

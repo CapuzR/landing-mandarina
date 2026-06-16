@@ -6,5 +6,13 @@
   "compatibility_date": "2025-06-01",
   "assets": {
     "directory": "./out"
-  }
+  },
+  // Mantener viva la URL workers.dev además de los dominios propios.
+  "workers_dev": true,
+  // Dominios públicos. Cloudflare gestiona el registro DNS del custom domain
+  // automáticamente (lo apunta al Worker).
+  "routes": [
+    { "pattern": "usamandarina.com", "custom_domain": true },
+    { "pattern": "www.usamandarina.com", "custom_domain": true }
+  ]
 }

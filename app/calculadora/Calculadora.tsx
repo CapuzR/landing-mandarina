@@ -361,7 +361,7 @@ export default function Calculadora() {
                 )}
                 {WORKER_CONFIGURADO && envio === "error" && (
                   <p className="text-sm text-tenue">
-                    No pudimos enviar el correo, pero acá tienes tus resultados.
+                    No pudimos enviar el correo, pero aquí tienes tus resultados.
                   </p>
                 )}
 
@@ -392,7 +392,7 @@ export default function Calculadora() {
                 Cobrar a crédito es trabajo de hormiga: perseguir vencidos,
                 transcribir capturas de varios bancos y cuadrar a mano los pagos
                 parciales en bolívares y dólares. El costo real no es solo el
-                tiempo, es gente capaz gastada en tareas mecánicas y plata que
+                tiempo, es gente capaz gastada en tareas mecánicas y dinero que
                 entra tarde al flujo de caja. El agente ejecuta ese ciclo y le
                 reporta a tu equipo, que pasa a supervisar y decidir.
               </p>

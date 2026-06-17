@@ -248,7 +248,7 @@ function emailProspecto(d) {
   return emailShell({
     preheader: `Tu reporte: ${usd(d.heroe_mensual)}/mes en trabajo de cobranza que el agente operaría.`,
     title: `Hola ${esc(d.nombre)},`,
-    subtitle: `Gracias por explorar lo que Mandarina puede hacer por la cobranza de <strong style="color:#1c1917;font-weight:700">${esc(d.empresa) || "tu empresa"}</strong>. Acá está tu reporte.`,
+    subtitle: `Gracias por explorar lo que Mandarina puede hacer por la cobranza de <strong style="color:#1c1917;font-weight:700">${esc(d.empresa) || "tu empresa"}</strong>. Aquí está tu reporte.`,
     body,
     footnote:
       "Los números son estimados y se solidifican con el aprendizaje de las Empresas Fundadoras.",
